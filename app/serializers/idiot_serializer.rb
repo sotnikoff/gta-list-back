@@ -8,7 +8,12 @@ class IdiotSerializer < ActiveModel::Serializer
              :agressive,
              :mom_joke,
              :imported,
-             :is_cheater,
+             :auto_kick,
+             :warn_me,
+             :freeze_player,
+             :blame,
+             :explode,
+             :cheats,
              :created_at,
              :updated_at
 end

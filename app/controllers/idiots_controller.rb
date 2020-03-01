@@ -39,6 +39,19 @@ class IdiotsController < ApplicationController
   end
 
   def permitted_attributes
-    params.require(:idiot).permit(:name, :death_date, :r_star_id, :pazient_diagnos, :is_cheater, :comment, :agressive, :mom_joke)
+    params.require(:idiot).permit(:name,
+                                  :death_date,
+                                  :r_star_id,
+                                  :pazient_diagnos,
+                                  :cheats,
+                                  :comment,
+                                  :auto_kick,
+                                  :warn_me,
+                                  :freeze_player,
+                                  :blame,
+                                  :explode,
+                                  :agressive,
+                                  :mom_joke
+    )
   end
 end

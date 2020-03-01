@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_01_112330) do
+ActiveRecord::Schema.define(version: 2020_03_01_195906) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,11 +22,16 @@ ActiveRecord::Schema.define(version: 2020_03_01_112330) do
     t.text "pazient_diagnos"
     t.text "comment"
     t.boolean "agressive", default: false
-    t.integer "mom_joke"
+    t.integer "mom_joke", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "is_cheater", default: false
     t.boolean "imported", default: false
+    t.boolean "auto_kick", default: false
+    t.boolean "warn_me", default: false
+    t.boolean "freeze_player", default: false
+    t.boolean "blame", default: false
+    t.boolean "explode", default: false
+    t.integer "cheats", default: 0
   end
 
 end

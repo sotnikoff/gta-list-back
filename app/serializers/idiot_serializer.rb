@@ -7,6 +7,7 @@ class IdiotSerializer < ActiveModel::Serializer
              :comment,
              :agressive,
              :mom_joke,
+             :imported,
              :is_cheater,
              :created_at,
              :updated_at

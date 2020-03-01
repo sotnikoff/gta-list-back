@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_01_110150) do
+ActiveRecord::Schema.define(version: 2020_03_01_112330) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2020_03_01_110150) do
     t.integer "r_star_id"
     t.text "pazient_diagnos"
     t.text "comment"
-    t.boolean "agressive"
+    t.boolean "agressive", default: false
     t.integer "mom_joke"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

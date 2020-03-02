@@ -6,7 +6,7 @@ class Idiot < ApplicationRecord
   validates :r_star_id, :name, presence: true
 
   def self.sync(overseer)
-    not_found_idiots = overseer.map { |o| not_found_idiots << o if Idiot.find_by(r_star_id: o[0]).blank? }
+    not_found_idiots = overseer.map { |o| o if Idiot.find_by(r_star_id: o[0]).blank? }
       .compact
 
     overseer.each do |o|

@@ -3,7 +3,7 @@
 # Change these
 server '188.225.34.66', port: 22, roles: %i[web app db], primary: true
 
-set :repo_url,        'git@github.com:sotnikoff/gta-list-back.git'
+set :repo_url,        'https://github.com/sotnikoff/gta-list-back.git'
 set :application,     'idiots_back'
 set :user,            'ms'
 set :puma_threads,    [4, 16]

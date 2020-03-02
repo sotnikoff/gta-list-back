@@ -32,6 +32,19 @@ gem 'bootsnap', '>= 1.4.2', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'capistrano', '~> 3.11', require: false
+  gem 'capistrano-bundler'
+  gem 'capistrano-db-tasks', require: false
+  gem 'capistrano-rails'
+  gem 'capistrano-rvm'
+  gem 'capistrano-sidekiq'
+  gem 'capistrano3-puma'
+  gem 'pry-rails'
+  gem 'pundit-matchers'
+  gem 'rspec-rails'
+  gem 'database_cleaner'
+  gem 'letter_opener'
+  gem 'rubocop', require: false
 end
 
 group :development do

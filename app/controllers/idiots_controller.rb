@@ -1,5 +1,5 @@
 class IdiotsController < ApplicationController
-  before_action :load_record, only: %i[show update destroy]
+  before_action :load_record, only: %i[show update destroy restore]
 
   def index
     idiots = Idiot.all
@@ -28,7 +28,12 @@ class IdiotsController < ApplicationController
   end
 
   def destroy
-    @idiot.destroy
+    @idiot.discard
+    head :no_content
+  end
+
+  def restore
+    @idiot.undiscard
     head :no_content
   end
 

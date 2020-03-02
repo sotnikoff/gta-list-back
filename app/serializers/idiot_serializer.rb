@@ -14,6 +14,7 @@ class IdiotSerializer < ActiveModel::Serializer
              :blame,
              :explode,
              :cheats,
+             :discarded_at,
              :created_at,
              :updated_at
 end

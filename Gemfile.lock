@@ -245,6 +245,8 @@ GEM
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
+    with_advisory_lock (4.6.0)
+      activerecord (>= 4.2)
     zeitwerk (2.2.2)
 
 PLATFORMS
@@ -276,6 +278,7 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
+  with_advisory_lock
 
 RUBY VERSION
    ruby 2.6.5p114

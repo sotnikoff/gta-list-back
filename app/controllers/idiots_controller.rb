@@ -37,6 +37,11 @@ class IdiotsController < ApplicationController
     head :no_content
   end
 
+  def sync
+    data = Idiot.sync(params[:overseer])
+    render json: data
+  end
+
   private
 
   def load_record

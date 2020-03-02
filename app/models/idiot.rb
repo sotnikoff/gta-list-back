@@ -8,11 +8,6 @@ class Idiot < ApplicationRecord
   def self.sync(overseer)
     not_found_idiots = overseer.map { |o| o if Idiot.find_by(r_star_id: o[0]).blank? }
       .compact
-
-    overseer.each do |o|
-      idiot = Idiot.find_by(r_star_id: o[0])
-      not_found_idiots << o if idiot.blank?
-    end
     not_found_idiots.each { |o| create_not_found_idiot(o) }
     show_idiots_in_overseer_format
   end

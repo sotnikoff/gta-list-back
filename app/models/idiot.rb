@@ -6,21 +6,15 @@ class Idiot < ApplicationRecord
   validates :r_star_id, :name, presence: true
 
   def self.sync(overseer)
-    # found_idiots = []
-    not_found_idiots = []
+    not_found_idiots = overseer.map { |o| not_found_idiots << o if Idiot.find_by(r_star_id: o[0]).blank? }
+      .compact
 
     overseer.each do |o|
       idiot = Idiot.find_by(r_star_id: o[0])
-      # if idiot.present?
-      #   found_idiots << { idiot: idiot, overseer: o } 
-      # else
-      #   not_found_idiots << o
-      # end
       not_found_idiots << o if idiot.blank?
     end
     not_found_idiots.each { |o| create_not_found_idiot(o) }
-    # found_idiots.each { |o| update_found_idiot(o) }
-    prepare_data
+    show_idiots_in_overseer_format
   end
 
   def self.create_not_found_idiot(overseer_data)
@@ -36,23 +30,7 @@ class Idiot < ApplicationRecord
     )
   end
 
-  # def self.update_found_idiot(data)
-  #   idiot = data[:idiot]
-  #   overseer_data = data[:overseer]
-  #   idiot.assign_attributes(
-  #     r_star_id: overseer_data[0],
-  #     auto_kick: overseer_data[1],
-  #     warn_me: overseer_data[2],
-  #     freeze_player: overseer_data[4],
-  #     blame: overseer_data[5],
-  #     explode: overseer_data[6],
-  #     name: overseer_data[7],
-  #     imported: true
-  #   )
-  #   idiot.save
-  # end
-
-  def self.prepare_data
+  def self.show_idiots_in_overseer_format
     idiots = Idiot.kept.order('name ASC')
     idiots.map do |idiot|
       mom_joke = ''

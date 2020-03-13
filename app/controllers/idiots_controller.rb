@@ -1,4 +1,5 @@
 class IdiotsController < ApplicationController
+  before_action :authenticate_user!
   before_action :load_record, only: %i[show update destroy restore]
 
   def index

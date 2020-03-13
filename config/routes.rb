@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+
+  namespace :auth do
+    post '', to: 'sessions#create'
+    delete '', to: 'sessions#destroy'
+    get '', to: 'sessions#validate'
+  end
+
   resources :idiots, only: %i[index show create update destroy] do
     get 'restore', on: :member
     put 'sync', on: :collection

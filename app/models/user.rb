@@ -9,7 +9,7 @@ class User < ApplicationRecord
 
   def create_token
     exp = Time.current + 10.days
-    token = JWT.encode({ data: { id: id, nickname: nickname }, exp: exp.to_i }, 'my$ecretK3y', 'HS256')
+    token = JWT.encode({ data: { id: id, nickname: nickname }, exp: exp.to_i }, Rails.application.credentials[:auth_key], 'HS256')
     user_tokens << UserToken.new(
       token: token,
       expired_at: exp

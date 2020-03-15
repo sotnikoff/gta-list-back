@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_13_190457) do
+ActiveRecord::Schema.define(version: 2020_03_15_164444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,7 +33,20 @@ ActiveRecord::Schema.define(version: 2020_03_13_190457) do
     t.boolean "explode", default: false
     t.integer "cheats", default: 0
     t.datetime "discarded_at"
+    t.boolean "draft", default: false
+    t.bigint "created_by"
+    t.integer "mom_joke_ratio", default: 0
     t.index ["discarded_at"], name: "index_idiots_on_discarded_at"
+  end
+
+  create_table "mamken_schutkens", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "idiot_id", null: false
+    t.text "message"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["idiot_id"], name: "index_mamken_schutkens_on_idiot_id"
+    t.index ["user_id"], name: "index_mamken_schutkens_on_user_id"
   end
 
   create_table "user_tokens", force: :cascade do |t|

@@ -13,6 +13,10 @@ class Idiot < ApplicationRecord
     show_idiots_in_overseer_format
   end
 
+  scope :visible, lambda {
+    where(draft: [false, nil])
+  }
+
   def self.create_not_found_idiot(overseer_data)
     Idiot.create(
       r_star_id: overseer_data[0],

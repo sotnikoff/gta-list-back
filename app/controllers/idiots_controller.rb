@@ -3,7 +3,7 @@ class IdiotsController < ApplicationController
   before_action :load_record, only: %i[show update destroy restore]
 
   def index
-    idiots = Idiot.all
+    idiots = Idiot.visible
     render json: idiots, each_serializer: IdiotSerializer
   end
 

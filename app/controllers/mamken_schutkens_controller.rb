@@ -8,6 +8,6 @@ class MamkenSchutkensController < ApplicationController
 
   def index
     schutken = MamkenSchutken.all
-    render json: schutken
+    render json: schutken, each_serializer: MamkenSchutkenSerializer
   end
 end

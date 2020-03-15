@@ -12,7 +12,7 @@ class IdiotsController < ApplicationController
   end
 
   def create
-    idiot = Idiot.new(permitted_attributes)
+    idiot = Idiot.new(permitted_attributes, author: current_user)
     if idiot.save
       render json: idiot, serializer: IdiotSerializer, status: :created
     else

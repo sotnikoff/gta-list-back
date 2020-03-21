@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :idiots, only: %i[index show create update destroy] do
     get 'restore', on: :member
     put 'sync', on: :collection
+    post 'create_or_update_batch', on: :collection
   end
 
   resources :mamken_schutkens, only: %i[create index]

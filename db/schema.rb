@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_15_222058) do
+ActiveRecord::Schema.define(version: 2020_03_21_170407) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(version: 2020_03_15_222058) do
     t.boolean "draft", default: false
     t.bigint "created_by"
     t.integer "mom_joke_ratio", default: 0
+    t.string "ip"
+    t.boolean "streamer", default: false
     t.index ["discarded_at"], name: "index_idiots_on_discarded_at"
   end
 

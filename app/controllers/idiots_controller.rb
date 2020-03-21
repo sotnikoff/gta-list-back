@@ -43,6 +43,18 @@ class IdiotsController < ApplicationController
     render json: data
   end
 
+  def create_or_update_batch
+    params[:players].each do |player|
+      idiot = Idiot.find_or_initialize_by(r_star_id: player[:r_star_id])
+      idiot.name = player[:name]
+      idiot.ip = player[:ip]
+      idiot.author = current_user
+      idiot.draft = true
+      idiot.save
+    end
+    head :created
+  end
+
   private
 
   def load_record

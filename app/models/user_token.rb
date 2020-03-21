@@ -1,7 +1,13 @@
 class UserToken < ApplicationRecord
   belongs_to :user
 
+  enum token_type: { user_token: 0, api_token: 1 }
+
   validates :token, :expired_at, presence: true
+
+  scope :api_tokens, lambda { |user|
+    where(token_type: 1, user: user)
+  }
 
   def self.user_by_token(token)
     parsed_token = parse_token(token)
@@ -21,5 +27,16 @@ class UserToken < ApplicationRecord
     return nil if token.nil?
 
     token.scan(/^Bearer (.+\..+)$/).flatten.try(:[], 0)
+  end
+
+  def self.create_api_token(user)
+    exp = Time.current + 365.days
+    token = JWT.encode({ data: { id: user.id, nickname: user.nickname }, exp: exp.to_i }, Rails.application.credentials[:auth_key], 'HS256')
+    UserToken.create(
+      token: token,
+      expired_at: exp,
+      token_type: :api_token,
+      user: user
+    )
   end
 end

@@ -12,6 +12,8 @@ class IdiotSerializer < ActiveModel::Serializer
              :warn_me,
              :freeze_player,
              :blame,
+             :mom_joke_ratio,
+             :streamer,
              :explode,
              :cheats,
              :discarded_at,

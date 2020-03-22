@@ -14,8 +14,20 @@ class Idiot < ApplicationRecord
   end
 
   scope :visible, lambda {
-    where(draft: [false, nil])
+    where(draft: [false, nil]).kept
   }
+
+  scope :drafts, lambda {
+    where(draft: true).kept
+  }
+
+  def self.query(params)
+    if params[:drafts].present? && params[:drafts] != 'false' 
+      drafts
+    else
+      visible
+    end
+  end
 
   def self.create_not_found_idiot(overseer_data)
     Idiot.create(
@@ -31,7 +43,7 @@ class Idiot < ApplicationRecord
   end
 
   def self.show_idiots_in_overseer_format
-    idiots = Idiot.kept.order('name ASC')
+    idiots = Idiot.visible.order('name ASC')
     idiots.map do |idiot|
       mom_joke = ''
       mom_joke = '[MJ1]' if idiot.mj_seldom?

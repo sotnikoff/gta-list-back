@@ -1,4 +1,3 @@
-
 class MamkenSchutkenSmartAnalyzer
   def initialize(messages, current_user)
     @messages = messages
@@ -9,10 +8,12 @@ class MamkenSchutkenSmartAnalyzer
     @messages.each do |message|
       idiot = Idiot.find_by(name: message[:author])
       Idiot.create(name: message[:author], draft: true, author: @current_user) if idiot.nil?
-      # MamkenSchutken.create(idiot: idiot, user: @current_user, message: message[:message])
+      MamkenSchutken.create(idiot: idiot, user: @current_user, message: message[:message])
     end
     analyze
   end
+
+  private
 
   def analyze
     result = {}

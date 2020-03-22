@@ -24,6 +24,8 @@ gem 'rack-cors', require: 'rack/cors'
 gem 'discard', '~> 1.2'
 gem 'with_advisory_lock'
 gem 'jwt'
+gem 'mailgun-ruby', '~>1.1.6'
+
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false

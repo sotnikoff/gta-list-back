@@ -3,7 +3,7 @@ class IdiotsController < ApplicationController
   before_action :load_record, only: %i[show update destroy restore]
 
   def index
-    idiots = Idiot.visible
+    idiots = Idiot.query(params)
     render json: idiots, each_serializer: IdiotSerializer
   end
 
@@ -12,7 +12,7 @@ class IdiotsController < ApplicationController
   end
 
   def create
-    idiot = Idiot.new(permitted_attributes, author: current_user)
+    idiot = Idiot.new(permitted_attributes.merge(author: current_user))
     if idiot.save
       render json: idiot, serializer: IdiotSerializer, status: :created
     else
@@ -44,14 +44,7 @@ class IdiotsController < ApplicationController
   end
 
   def create_or_update_batch
-    params[:players].each do |player|
-      idiot = Idiot.find_or_initialize_by(r_star_id: player[:r_star_id])
-      idiot.name = player[:name]
-      idiot.ip = player[:ip]
-      idiot.author = current_user
-      idiot.draft = true
-      idiot.save
-    end
+    CreateOrUpdatePlayers.call(params[:players], current_user)
     head :created
   end
 
@@ -73,6 +66,7 @@ class IdiotsController < ApplicationController
                                   :freeze_player,
                                   :blame,
                                   :explode,
+                                  :streamer,
                                   :agressive,
                                   :mom_joke
     )

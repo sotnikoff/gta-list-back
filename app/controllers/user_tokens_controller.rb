@@ -7,7 +7,7 @@ class UserTokensController < ApplicationController
   end
 
   def index
-    tokens = UserToken.api_tokens(current_user)
+    tokens = UserToken.api_tokens(current_user).order('created_at DESC')
     render json: tokens, each_serializer: UserTokenSerializer
   end
 

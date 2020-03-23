@@ -79,9 +79,22 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.action_mailer.mailgun_settings = {
-    api_key: Rails.application.credentials.production[:mailgun_token],
-    domain: Rails.application.credentials.production[:mailgun_domain]
+  # config.action_mailer.delivery_method = :mailgun
+  # config.action_mailer.mailgun_settings = {
+  #   api_key: Rails.application.credentials.production[:mailgun_token],
+  #   domain: Rails.application.credentials.production[:mailgun_domain]
+  # }
+
+  config.action_mailer.delivery_method = :smtp
+  ActionMailer::Base.smtp_settings = {
+    user_name: Rails.application.credentials.production[:smtp_user],
+    password: Rails.application.credentials.production[:smtp_password],
+    authentication: 'plain',
+    address: Rails.application.credentials.production[:smtp_address],
+    domain: Rails.application.credentials.production[:smtp_domain],
+    port: Rails.application.credentials.production[:smtp_port]
+    # enable_starttls_auto: true,
+    # ssl: true
   }
 
   # Inserts middleware to perform automatic connection switching.

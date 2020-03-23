@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'do-not-reply@sandbox1ff0adbfcdff4300aa1bb8ff1a739faf.mailgun.org'
+  default from: (Rails.env == 'production' ? Rails.application.credentials.production[:smtp_user] : 'test@test.com')
   layout 'mailer'
 end

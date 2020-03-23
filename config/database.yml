@@ -80,6 +80,4 @@ test:
 #
 production:
   <<: *default
-  database: idiots_back_production
-  username: idiots_back
-  password: <%= ENV['IDIOTS_BACK_DATABASE_PASSWORD'] %>
+  database: idiots_back_development

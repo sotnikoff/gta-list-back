@@ -42,9 +42,12 @@ class User < ApplicationRecord
   end
 
   def self.invite(inv_email, current_user)
+    url = Rails.application.credentials.public_send(Rails.env.to_sym)[:front_address]
     exp = Time.current + 30.days
     token = JWT.encode({ data: { email: inv_email }, exp: exp.to_i }, Rails.application.credentials[:auth_key], 'HS256')
-    User.create(email: inv_email, invitation_token: token, inviter: current_user)
+    user = User.create(email: inv_email, invitation_token: token, inviter: current_user)
+    InvitesMailer.invite(user, url).deliver_now if user.valid?
+    user
   end
 
   private

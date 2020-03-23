@@ -25,6 +25,7 @@ gem 'discard', '~> 1.2'
 gem 'with_advisory_lock'
 gem 'jwt'
 gem 'mailgun-ruby', '~>1.1.6'
+gem 'haml-rails'
 
 
 # Reduces boot times through caching; required in config/boot.rb

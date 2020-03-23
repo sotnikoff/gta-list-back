@@ -1,16 +1,17 @@
 # frozen_string_literal: true
 
 # Change these
-server '188.225.34.66', port: 22, roles: %i[web app db], primary: true
+server '188.225.11.241', port: 22, roles: %i[web app db], primary: true
 
 set :repo_url,        'https://github.com/sotnikoff/gta-list-back.git'
-set :application,     'idiots_back'
-set :user,            'ms'
+set :application,     'idiots-back'
+set :user,            'deploy'
 set :puma_threads,    [4, 16]
 set :puma_workers,    0
 set :default_shell,   '/bin/bash -l'
-set :rvm_bin_path,    '/usr/share/rvm/bin/rvm'
-set :rvm_type, :system
+set :rvm_bin_path,    '/home/deploy/.rvm/bin/rvm'
+set :rvm_type, :user
+set :rvm_ruby_version, '2.6.5@idiots-back'
 
 # Don't change these unless you know what you're doing
 set :pty,             true

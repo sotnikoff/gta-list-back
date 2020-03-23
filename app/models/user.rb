@@ -2,7 +2,7 @@ class User < ApplicationRecord
   include BCrypt
 
   has_many :user_tokens, dependent: :destroy
-  belongs_to :inviter, class_name: 'User', foreign_key: :invited_by
+  belongs_to :inviter, class_name: 'User', foreign_key: :invited_by, optional: true
 
   validates :nickname, presence: true, if: :not_invited?
   validates :nickname, uniqueness: true, if: :not_invited?

@@ -16,6 +16,12 @@ class IdiotSerializer < ActiveModel::Serializer
              :streamer,
              :explode,
              :cheats,
+             :ip,
+             :city,
+             :country,
+             :region,
+             :latitude,
+             :longitude,
              :discarded_at,
              :created_at,
              :updated_at

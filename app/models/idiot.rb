@@ -36,7 +36,7 @@ class Idiot < ApplicationRecord
 
     return true if ip.empty?
 
-    IpParseJob.set(wait: 3.seconds).perform_later(self)
+    IpParseJob.set(wait: 3.seconds).perform_later(id)
   end
 
   def self.create_not_found_idiot(overseer_data)

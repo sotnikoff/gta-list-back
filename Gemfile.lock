@@ -312,6 +312,7 @@ DEPENDENCIES
   rails (~> 6.0.2, >= 6.0.2.1)
   rspec-rails
   rubocop
+  sidekiq
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data

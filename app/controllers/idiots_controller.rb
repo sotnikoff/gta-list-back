@@ -65,6 +65,7 @@ class IdiotsController < ApplicationController
                                   :warn_me,
                                   :freeze_player,
                                   :blame,
+                                  :ip,
                                   :explode,
                                   :streamer,
                                   :agressive,

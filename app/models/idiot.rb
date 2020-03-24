@@ -6,7 +6,7 @@ class Idiot < ApplicationRecord
   validates :name, presence: true
   belongs_to :author, class_name: 'User', foreign_key: :created_by
 
-  before_save :check_ip
+  after_save :check_ip
 
   def self.sync(overseer)
     not_found_idiots = overseer.map { |o| o if Idiot.find_by(r_star_id: o[0]).blank? }
@@ -32,17 +32,11 @@ class Idiot < ApplicationRecord
   end
 
   def check_ip
-    return true unless ip_changed?
+    return true if !saved_changes.key?('ip')
 
-    return true if ip.nil?
+    return true if ip.empty?
 
-    handler = IPinfo::create(Rails.application.credentials[:ipinfo_key])
-    details = handler.details(ip)
-    self.city = details.city
-    self.country = details.country_name
-    self.region = details.region
-    self.longitude = details.longitude
-    self.latitude = details.latitude
+    IpParseJob.set(wait: 3.seconds).perform_later(self)
   end
 
   def self.create_not_found_idiot(overseer_data)
@@ -59,13 +53,8 @@ class Idiot < ApplicationRecord
   end
 
   def self.show_idiots_in_overseer_format
-    idiots = Idiot.visible.order('name ASC')
+    idiots = Idiot.visible.kept.order('name ASC')
     idiots.map do |idiot|
-      mom_joke = ''
-      mom_joke = '[MJ1]' if idiot.mj_seldom?
-      mom_joke = '[MJ2]' if idiot.mj_normal?
-      mom_joke = '[MJ3]' if idiot.mj_often?
-      mom_joke = '[MJ4]' if idiot.mj_very_often?
       cheat = ''
       cheat = '[CHEAT]' if idiot.cheats_some?
       cheat = '[IMP]' if idiot.cheats_impulse?
@@ -77,7 +66,7 @@ class Idiot < ApplicationRecord
         (idiot.freeze_player ? 1 : 0),
         (idiot.blame ? 1 : 0),
         (idiot.explode ? 1 : 0),
-        "#{idiot.name}#{mom_joke}#{cheat}"
+        "#{idiot.name}#{idiot.mom_joke_ratio}#{cheat}"
       ]
     end
   end

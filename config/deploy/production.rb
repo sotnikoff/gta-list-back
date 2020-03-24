@@ -12,7 +12,6 @@ set :default_shell,   '/bin/bash -l'
 set :rvm_bin_path,    '/home/deploy/.rvm/bin/rvm'
 set :rvm_type, :user
 set :rvm_ruby_version, '2.6.5@idiots-back'
-set :branch, 'get-ip-info'
 
 # Don't change these unless you know what you're doing
 set :pty,             true

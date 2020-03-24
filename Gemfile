@@ -26,7 +26,7 @@ gem 'with_advisory_lock'
 gem 'jwt'
 gem 'haml-rails'
 gem 'IPinfo'
-gem 'sidekiq'
+gem 'sidekiq', '5.2.2'
 
 
 # Reduces boot times through caching; required in config/boot.rb

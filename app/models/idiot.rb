@@ -6,6 +6,8 @@ class Idiot < ApplicationRecord
   validates :name, presence: true
   belongs_to :author, class_name: 'User', foreign_key: :created_by
 
+  before_save :check_ip
+
   def self.sync(overseer)
     not_found_idiots = overseer.map { |o| o if Idiot.find_by(r_star_id: o[0]).blank? }
       .compact
@@ -27,6 +29,20 @@ class Idiot < ApplicationRecord
     else
       visible
     end
+  end
+
+  def check_ip
+    return true unless ip_changed?
+
+    return true if ip.nil?
+
+    handler = IPinfo::create(Rails.application.credentials[:ipinfo_key])
+    details = handler.details(ip)
+    self.city = details.city
+    self.country = details.country_name
+    self.region = details.region
+    self.longitude = details.longitude
+    self.latitude = details.latitude
   end
 
   def self.create_not_found_idiot(overseer_data)

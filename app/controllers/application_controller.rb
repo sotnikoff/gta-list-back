@@ -8,6 +8,7 @@ class ApplicationController < ActionController::API
 
   def authenticate_user!
     @current_user = UserToken.user_by_token(request.headers['Authorization'])
+
     raise NotAuthenticated if @current_user.blank?
   end
 

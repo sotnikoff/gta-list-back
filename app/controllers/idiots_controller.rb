@@ -20,7 +20,7 @@ class IdiotsController < ApplicationController
     if idiot.save
       render json: idiot, serializer: IdiotSerializer, status: :created
     else
-      render json: idiot.errors.messages, status: :bad_request
+      render json: idiot.errors.messages, status: :unprocessable_entity
     end
   end
 
@@ -28,7 +28,7 @@ class IdiotsController < ApplicationController
     if @idiot.update(permitted_attributes)
       render json: @idiot, serializer: IdiotSerializer
     else
-      render json: @idiot.errors.messages, status: :bad_request
+      render json: @idiot.errors.messages, status: :unprocessable_entity
     end
   end
 

@@ -1,5 +1,3 @@
-require 'IPinfo'
-
 class IpParseJob < ApplicationJob
   queue_as :default
 

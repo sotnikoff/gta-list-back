@@ -10,8 +10,12 @@ class CreateOrUpdatePlayers
 
   def call
     @players.each do |player|
-      idiot = Idiot.find_or_initialize_by(r_star_id: player[:r_star_id])
+      idiot = Idiot.find_by(r_star_id: player[:r_star_id])
+      idiot = Idiot.find_by(name: player[:name]) if idiot.nil?
+      idiot = Idiot.new if idiot.nil?
+      
       idiot.name = player[:name]
+      idiot.r_star_id = player[:r_star_id]
       idiot.ip = player[:ip]
       idiot.author = @current_user
       idiot.draft = true

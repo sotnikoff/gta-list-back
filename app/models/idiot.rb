@@ -34,7 +34,7 @@ class Idiot < ApplicationRecord
   def check_ip
     return true if !saved_changes.key?('ip')
 
-    return true if ip.empty?
+    return true if ip.nil?
 
     IpParseJob.set(wait: 3.seconds).perform_later(id)
   end

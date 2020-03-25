@@ -4,13 +4,15 @@ class IpParseJob < ApplicationJob
   def perform(idiot_id)
     idiot = Idiot.find(idiot_id)
 
-    handler = IPinfo::create(Rails.application.credentials[:ipinfo_key])
-    details = handler.details(idiot.ip)
-    idiot.city = details.city
-    idiot.country = details.country_name
-    idiot.region = details.region
-    idiot.longitude = details.longitude
-    idiot.latitude = details.latitude
+    response = HTTParty.get("https://ipinfo.io/#{idiot.ip}?token=#{Rails.application.credentials[:ipinfo_key]}")
+    return if response.code != 200
+
+    result = response.to_h
+    idiot.latitude = result['loc'].split(',').first.to_f
+    idiot.longitude = result['loc'].split(',').last.to_f
+    idiot.country = result['country']
+    idiot.city = result['city']
+    idiot.region = result['region']
     idiot.save
   end
 end

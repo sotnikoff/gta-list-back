@@ -5,6 +5,7 @@ class Idiot < ApplicationRecord
   enum cheats: { cheats_none: 0, cheats_some: 1, cheats_impulse: 2 }
   validates :name, presence: true
   belongs_to :author, class_name: 'User', foreign_key: :created_by
+  has_many :mamken_schutkens, dependent: :destroy
 
   after_save :check_ip
 

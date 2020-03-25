@@ -3,7 +3,11 @@ class IdiotsController < ApplicationController
   before_action :load_record, only: %i[show update destroy restore]
 
   def index
-    idiots = Idiot.query(params)
+    idiots = if params[:list_all].present?
+      Idiot.order('name ASC').all
+    else
+      Idiot.query(params)
+    end
     render json: idiots, each_serializer: IdiotSerializer
   end
 

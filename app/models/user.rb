@@ -13,8 +13,14 @@ class User < ApplicationRecord
 
   before_validation :calculate_password, if: :not_invited?
 
-  scope :invited, lambda { |params|
-    return where.not(invited_by: nil) if params[:invited].present? && params[:invited] != 'false'
+  scope :invited, lambda { |invited|
+    return where.not(invited_by: nil) if invited.present?
+
+    all
+  }
+
+  scope :accepted, lambda { |accepted|
+    return where(invitation_token: nil) if accepted.present?
 
     all
   }
@@ -38,7 +44,8 @@ class User < ApplicationRecord
   end
 
   def self.by_filter(params)
-    invited(params)
+    invited(params[:invited])
+      .accepted(params[:accepted])
   end
 
   def self.invite(inv_email, current_user)

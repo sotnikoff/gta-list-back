@@ -25,7 +25,7 @@ gem 'discard', '~> 1.2'
 gem 'with_advisory_lock'
 gem 'jwt'
 gem 'haml-rails'
-gem 'IPinfo'
+gem 'httparty', '~> 0.18.0'
 gem 'sidekiq', '5.2.2'
 
 

@@ -7,7 +7,7 @@ class MamkenSchutkensController < ApplicationController
   end
 
   def index
-    schutken = MamkenSchutken.all
+    schutken = MamkenSchutken.by_query(params)
     render json: schutken, each_serializer: MamkenSchutkenSerializer
   end
 end

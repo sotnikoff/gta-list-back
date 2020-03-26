@@ -37,7 +37,7 @@ class ProfilesController < ApplicationController
   private
 
   def permitted_attributes
-    params.require(:profile).permit(:name, :r_star_id, :from_idiot)
+    params.require(:profile).permit(:name, :r_star_id, :idiot_id)
   end
 
   def load_record

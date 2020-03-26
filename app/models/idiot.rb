@@ -9,6 +9,7 @@ class Idiot < ApplicationRecord
 
   belongs_to :author, class_name: 'User', foreign_key: :created_by
   has_many :mamken_schutkens, dependent: :destroy
+  has_one :profile
 
   after_save :check_ip
 

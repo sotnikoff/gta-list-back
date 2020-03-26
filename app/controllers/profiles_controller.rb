@@ -1,9 +1,9 @@
 class ProfilesController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_record, only: %i[update destroy]
+  before_action :load_record, only: %i[update destroy show]
 
   def index
-    profiles = Profile.all
+    profiles = Profile.order('name ASC')
     render json: profiles, each_serializer: ProfileSerializer
   end
 
@@ -15,6 +15,10 @@ class ProfilesController < ApplicationController
     else
       render json: profile.errors.messages, status: :unprocessable_entity
     end
+  end
+
+  def show
+    render json: @profile, serializer: ProfileSerializer
   end
 
   def update
@@ -33,7 +37,7 @@ class ProfilesController < ApplicationController
   private
 
   def permitted_attributes
-    params.require(:profile).permit(:name, :r_star_id)
+    params.require(:profile).permit(:name, :r_star_id, :from_idiot)
   end
 
   def load_record

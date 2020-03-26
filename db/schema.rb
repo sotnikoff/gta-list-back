@@ -58,8 +58,9 @@ ActiveRecord::Schema.define(version: 2020_03_25_221839) do
 
   create_table "profiles", force: :cascade do |t|
     t.string "name"
-    t.string "r_star_id"
+    t.bigint "r_star_id"
     t.bigint "created_by"
+    t.boolean "from_idiot", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     post 'create_or_update_batch', on: :collection
   end
 
-  resources :profiles, only: %i[create index update destroy]
+  resources :profiles, only: %i[create index update destroy show]
   resources :mamken_schutkens, only: %i[create index]
   resources :user_tokens, only: %i[create index destroy]
   resources :users, only: %i[index]

@@ -10,8 +10,7 @@ class CreateOrUpdatePlayers
 
   def call
     @players.each do |player|
-      idiot = Idiot.find_by(r_star_id: player[:r_star_id])
-      idiot = Idiot.find_by(name: player[:name]) if idiot.nil?
+      idiot = Idiot.where('idiots.r_star_id = ? OR idiots.name = ?', player[:r_star_id], player[:name]).first
       idiot = Idiot.new if idiot.nil?
       
       idiot.name = player[:name]
@@ -20,7 +19,7 @@ class CreateOrUpdatePlayers
       idiot.author = @current_user
       idiot.draft = true
       idiot.imported = true
-      idiot.save
+      idiot.save if idiot.changed?
     end
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_23_225537) do
+ActiveRecord::Schema.define(version: 2020_03_26_123704) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_225537) do
   create_table "idiots", force: :cascade do |t|
     t.string "name"
     t.datetime "death_date"
-    t.integer "r_star_id"
+    t.bigint "r_star_id"
     t.text "pazient_diagnos"
     t.text "comment"
     t.boolean "agressive", default: false
@@ -54,6 +54,15 @@ ActiveRecord::Schema.define(version: 2020_03_23_225537) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["idiot_id"], name: "index_mamken_schutkens_on_idiot_id"
     t.index ["user_id"], name: "index_mamken_schutkens_on_user_id"
+  end
+
+  create_table "profiles", force: :cascade do |t|
+    t.string "name"
+    t.bigint "r_star_id"
+    t.bigint "created_by"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "idiot_id"
   end
 
   create_table "user_tokens", force: :cascade do |t|

@@ -25,4 +25,10 @@ class IdiotSerializer < ActiveModel::Serializer
              :discarded_at,
              :created_at,
              :updated_at
+
+  attribute :profile_id
+
+  def profile_id
+    object.profile&.id.presence
+  end
 end

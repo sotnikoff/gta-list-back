@@ -26,9 +26,13 @@ class IdiotSerializer < ActiveModel::Serializer
              :created_at,
              :updated_at
 
-  attribute :profile_id
+  attribute :profile_id, if: :full?
 
   def profile_id
     object.profile&.id.presence
+  end
+
+  def full?
+    p instance_options[:full]
   end
 end

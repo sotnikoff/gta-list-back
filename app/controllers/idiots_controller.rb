@@ -12,7 +12,7 @@ class IdiotsController < ApplicationController
   end
 
   def show
-    render json: @idiot, serializer: IdiotSerializer
+    render json: @idiot, serializer: IdiotSerializer, full: true
   end
 
   def create

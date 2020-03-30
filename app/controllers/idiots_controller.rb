@@ -43,7 +43,7 @@ class IdiotsController < ApplicationController
   end
 
   def sync
-    data = Idiot.sync(params[:overseer])
+    data = Idiot.sync(params[:overseer], current_user)
     render json: data
   end
 

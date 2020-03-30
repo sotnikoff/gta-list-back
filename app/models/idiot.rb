@@ -13,10 +13,10 @@ class Idiot < ApplicationRecord
 
   after_save :check_ip
 
-  def self.sync(overseer)
+  def self.sync(overseer, current_user)
     not_found_idiots = overseer.map { |o| o if Idiot.find_by(r_star_id: o[0]).blank? }
       .compact
-    not_found_idiots.each { |o| create_not_found_idiot(o) }
+    not_found_idiots.each { |o| create_not_found_idiot(o, current_user) }
     show_idiots_in_overseer_format
   end
 
@@ -44,8 +44,13 @@ class Idiot < ApplicationRecord
     IpParseJob.set(wait: 3.seconds).perform_later(id)
   end
 
-  def self.create_not_found_idiot(overseer_data)
-    Idiot.create(
+  def self.create_not_found_idiot(overseer_data, current_user)
+    idiot = Idiot.find_by(name: overseer_data[7])
+
+    idiot = Idiot.new if idiot.nil?
+
+
+    idiot.assign_attributes(
       r_star_id: overseer_data[0],
       auto_kick: overseer_data[1],
       warn_me: overseer_data[2],
@@ -53,8 +58,10 @@ class Idiot < ApplicationRecord
       blame: overseer_data[5],
       explode: overseer_data[6],
       name: overseer_data[7],
+      author: current_user,
       imported: true
     )
+    idiot.save
   end
 
   def self.show_idiots_in_overseer_format

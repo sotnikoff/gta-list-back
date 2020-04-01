@@ -44,7 +44,7 @@ class IdiotsController < ApplicationController
 
   def sync
     data = Idiot.sync(params[:overseer], current_user)
-    render json: data
+    render json: data[:idiots], status: data[:zero_count] ? 208 : :created;
   end
 
   def create_or_update_batch

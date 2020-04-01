@@ -14,10 +14,20 @@ class Idiot < ApplicationRecord
   after_save :check_ip
 
   def self.sync(overseer, current_user)
-    not_found_idiots = overseer.map { |o| o if Idiot.find_by(r_star_id: o[0]).blank? }
-      .compact
-    not_found_idiots.each { |o| create_not_found_idiot(o, current_user) }
-    show_idiots_in_overseer_format
+    count = 0
+    not_found_idiots = overseer.map { |o|
+      idiot = Idiot.find_by(r_star_id: o[0])
+      if idiot.present?
+        idiot.update(draft: false) if idiot.draft
+        nil
+      else
+        o
+      end
+    }.compact
+    not_found_idiots.each { |o|
+      count += 1 if create_not_found_idiot(o, current_user)
+    }
+    show_idiots_in_overseer_format(count)
   end
 
   scope :visible, lambda {
@@ -46,8 +56,10 @@ class Idiot < ApplicationRecord
 
   def self.create_not_found_idiot(overseer_data, current_user)
     idiot = Idiot.find_by(name: overseer_data[7])
-
+    idiot_created = idiot.nil?
     idiot = Idiot.new if idiot.nil?
+
+    return if overseer_data[7] == 'Empty note'
 
 
     idiot.assign_attributes(
@@ -59,14 +71,16 @@ class Idiot < ApplicationRecord
       explode: overseer_data[6],
       name: overseer_data[7],
       author: current_user,
-      imported: true
+      imported: true,
+      draft: false
     )
     idiot.save
+    idiot_created
   end
 
-  def self.show_idiots_in_overseer_format
+  def self.show_idiots_in_overseer_format(count)
     idiots = Idiot.visible.kept.order('name ASC')
-    idiots.map do |idiot|
+    formatted_idiots = idiots.map do |idiot|
       cheat = ''
       cheat = '[CHEAT]' if idiot.cheats_some?
       cheat = '[IMP]' if idiot.cheats_impulse?
@@ -81,5 +95,6 @@ class Idiot < ApplicationRecord
         "#{idiot.name}#{idiot.mom_joke_ratio}#{cheat}"
       ]
     end
+    { idiots: formatted_idiots, zero_count: count.zero? }
   end
 end

@@ -33,6 +33,6 @@ class IdiotSerializer < ActiveModel::Serializer
   end
 
   def full?
-    p instance_options[:full]
+    instance_options[:full]
   end
 end

@@ -25,7 +25,7 @@ gem 'discard', '~> 1.2'
 gem 'with_advisory_lock'
 gem 'jwt'
 gem 'haml-rails'
-gem 'httparty', '~> 0.18.0'
+gem 'httparty', '~> 0.21.0'
 gem 'sidekiq', '5.2.2'
 
 
